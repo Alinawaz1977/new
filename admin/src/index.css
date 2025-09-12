@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+a.active{
+    background-color: #f2f3ff;
+}
+a.active .line {
+    display: block;
+}
