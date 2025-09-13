@@ -21,6 +21,9 @@ connectCloudinary()
 
 app.use("/api/doctor",doctorRouter)
 app.use("/api/admin",adminRouter)
+app.get("/",(req,res)=>{
+  res.send("app is running")
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

@@ -4,23 +4,34 @@ import Sidebar from './components/Sidebar'
 import Navbar from './components/Navbar'
 import { Route, Routes } from 'react-router-dom'
 import AdminLogin from './components/AdminLogin'
-import { useEffect } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import { useEffect, useState } from 'react'
+
+export const backendUrl=import.meta.env.VITE_BACKEND_URI
 
 const App = () => {
-  const [token, setToken] = useState('')
+  const [token, setToken] = useState(localStorage.getItem("token")?localStorage.getItem("token"):"")
+
+ useEffect(() => {
+ localStorage.setItem("token",token)
+ }, [token])
+ 
+  
+
   return (
     <>
-    {
-      token===''?<AdminLogin/>:""
-    }
+    <ToastContainer/>
+      {
+        token === '' ? <AdminLogin setToken={setToken} /> :<>
     <Navbar/>
     <div className='flex bg-slate-100 gap-6 border-b h-screen  border-gray-400 ' >
-      {/* <Sidebar/> */}
+      <Sidebar/>
       <Routes>
-        <Route path='/adminlogin' element={<AdminLogin/>} />
-        <Route path='/add' element={<Add/>} />
+        <Route path='/add' element={<Add token={token} />} />
       </Routes>
     </div>
+        </>
+      }
     </>
   )
 }
