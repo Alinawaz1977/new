@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&family=Prata&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&family=Prata&display=swap');
+@import "tailwindcss";
+
+body {
+    font-family: outfit;
+}
+
+.inter {
+    font-family: inter;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.blue {
+    position: relative;
+    z-index: 50;
+    color: black;
+    overflow: hidden;
+
+}
+
+.blue::before {
+    content: "";
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    background-color: blue;
+    left: 0;
+    z-index: -1;
+    bottom: -40px;
+    border-radius: 50%;
+}
+.blue:hover::before{
+    bottom: 0;
+    border-radius: 0;
+    transition: all .4s ease-out;
+}
+.blue:hover{
+color: white;    
+}
+ a.active{
+    background-color: #e2e5ff;
+    border:none
+ }
+

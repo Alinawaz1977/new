@@ -11,3 +11,7 @@ a.active .line {
 body{
     font-family: outfit;
 }
+
+::-webkit-scrollbar{
+    display: none;
+}

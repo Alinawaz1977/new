@@ -44,6 +44,10 @@ const doctorschema = new mongoose.Schema({
     address2: {
         type: String,
         require: true
+    },
+    available:{
+        type:Boolean,
+        default:true
     }
 })
 

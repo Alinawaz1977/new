@@ -5,18 +5,21 @@ import { useState } from 'react'
 import axios from 'axios'
 import { backendUrl } from '../App'
 import { toast } from 'react-toastify'
+import Lottie from "lottie-react"
 
-const Add = ({token}) => {
+import loader from "../assets/loader.json"
+
+const Add = ({ token }) => {
   const [image, setimage] = useState('')
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting }, reset
   } = useForm()
 
   const onSubmit = async (data) => {
     console.log(data);
-    
+
     try {
       const formdata = new FormData()
       formdata.append("image", image)
@@ -34,6 +37,8 @@ const Add = ({token}) => {
       const response = await axios.post(backendUrl + "/api/doctor/add", formdata, { headers: { token } })
       if (response.data.success) {
         toast.success(response.data.message)
+        setimage('')
+        reset()
       }
       else {
         toast.error(response.data.message)
@@ -146,12 +151,17 @@ const Add = ({token}) => {
 
             {/* Submit button full width */}
             <div className="col-span-2">
-              <button
-                className="py-1.5 px-6 rounded-full cursor-pointer text-white font-medium bg-blue-600"
-                type="submit"
-              >
-                Add a Doctor
-              </button>
+              {isSubmitting ? (
+                <Lottie animationData={loader} loop={true} className="w-30 h-30" />
+              ) : (
+                <button
+                  className="py-1.5 px-6 rounded-full cursor-pointer text-white font-medium bg-blue-600"
+                  type="submit"
+                >
+                  Add a Doctor
+                </button>
+              )}
+
             </div>
           </form>
         </div>

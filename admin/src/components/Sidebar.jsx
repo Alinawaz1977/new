@@ -1,11 +1,12 @@
 import React from 'react'
-import {Link, NavLink} from "react-router-dom"
+import {Link, Navigate, NavLink, useNavigate} from "react-router-dom"
 import { assets } from '../assets/assets'
 
 const Sidebar = () => {
+  const navigate=useNavigate()
   return (
     <>
-    <div className='w-[20vw] border-r border-gray-200 min-h-screen bg-white ' >
+    <div className='w-[20vw]  border-r shrink-0 border-gray-200 min-h-screen bg-white ' >
      <NavLink className={'flex h-10 justify-between py-1.5 mt-4 pl-5 w-full '} to={"/dashboard"} >
      <div className='flex gap-3 items-center ' >
       <img className='w-5'  src={assets.home_icon} alt="home" />
@@ -27,9 +28,9 @@ const Sidebar = () => {
      </div>
      <div className='h-7 w-[4px] bg-blue-700 hidden line ' ></div>
      </NavLink>
-     <NavLink className={'flex h-10 justify-between py-1.5 mt-4 pl-5 w-full '} to={"/list"} >
+     <NavLink className={'flex h-10 justify-between py-1.5 mt-4 pl-5 w-full '} to={"/listdoctor"} >
      <div className='flex gap-3 items-center ' >
-      <img className='w-5'  src={assets.add_icon} alt="home" />
+      <img  className='w-5'  src={assets.add_icon} alt="home" />
       <p className='   ' >Doctor List</p>
      </div>
      <div className='h-7 w-[4px] bg-blue-700 hidden line ' ></div>

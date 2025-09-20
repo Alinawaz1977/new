@@ -6,7 +6,6 @@ const userSchema= new mongoose.Schema({
         type:String,
     },
     image:{
-        require:true,
         type:String
     },
     email:{
@@ -18,15 +17,13 @@ const userSchema= new mongoose.Schema({
         type:String
     },
     age:{
-        require:true,
         type:Number
     },
     gender:{
-        require:true,
         type:String
     }
 })
 
-const userModel= mongoose.models || mongoose.model("user",userSchema)
+const userModel= mongoose.models.user || mongoose.model("user",userSchema)
 
 export default userModel
