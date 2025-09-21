@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import ContactUs from './pages/ContactUs';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
+import DoctorPage from './pages/DoctorPage';
 
 export const backendUrl=import.meta.env.VITE_BACKEND_URI
 
@@ -23,11 +24,12 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/doctors' element={<Doctors/>} />
-        <Route path='/doctors/:speciality' element={<SpecialityDoctor/>} />
+        <Route path='/doctors/category/:speciality' element={<SpecialityDoctor/>} />
         <Route path='/about'element={<About/>} />
         <Route path='/contact' element={<ContactUs/>} />
         <Route path='/profile' element={<Profile/>} />
         <Route path='/login' element={<Login/>} />
+        <Route path='/doctors/:doctorid' element={<DoctorPage/>} />
       </Routes>
       <Footer/>
     </div>

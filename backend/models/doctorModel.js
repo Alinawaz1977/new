@@ -45,11 +45,24 @@ const doctorschema = new mongoose.Schema({
         type: String,
         require: true
     },
-    available:{
-        type:Boolean,
-        default:true
-    }
-})
+    available: {
+        type: Boolean,
+        default: true
+    },
+    slots: [
+        {
+            day: { type: String },
+            times: [
+                {
+                    time: {
+                        type: String,
+                    },
+                    isBooked: { type: Boolean, default: false }
+                }
+            ]
+        }
+    ]
+},{minimize:false})
 
 const doctormodel = mongoose.models.doctor || mongoose.model("doctor", doctorschema)
 

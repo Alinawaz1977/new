@@ -1,9 +1,10 @@
 import React, { useContext } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { DoctorContext } from '../Context/doctorContext'
 import Sidebar from '../components/Sidebar'
 
 const Doctors = () => {
+  const navigate=useNavigate()
   const { doctors ,filter,setfilter} = useContext(DoctorContext)
   return (
     <>
@@ -16,7 +17,7 @@ const Doctors = () => {
       <div className='flex h-[80vh] justify-center sm:justify-normal overflow-scroll gap-5 mt-5 flex-wrap ' >
         {
           doctors.map((doctor) => (
-            <div className='border hover:transform hover:translate-y-[-10px] transition-all duration-300 h-fit  w-fit cursor-pointer rounded-md border-gray-300' >
+            <div onClick={()=>navigate(doctor._id)} className='border hover:transform hover:translate-y-[-10px] transition-all duration-300 h-fit  w-fit cursor-pointer rounded-md border-gray-300' >
               <div className=' rounded-md w-[240px] bg-[#eaefff] transition-all duration-500  h-[240px] ' >
                 <img loading='lazy' className='w-[240px] h-[240px] object-cover ' src={doctor.image} alt="" />
               </div>
