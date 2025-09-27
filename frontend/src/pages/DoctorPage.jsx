@@ -1,18 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { DoctorContext } from "../Context/doctorContext";
 import { assets } from "../assets/assets";
 import ContactUs from "./ContactUs";
 import { Title } from "../components/Title";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { backendUrl } from "../App";
 
 const DoctorPage = () => {
-    const { doctors } = useContext(DoctorContext);
+    const navigate = useNavigate()
+    const { doctors, token } = useContext(DoctorContext);
     const { doctorid } = useParams();
     const [doctorinfo, setDoctorinfo] = useState(null);
     const [doctorSlots, setDoctorSlots] = useState([])
     const [slotIndex, setSlotIndex] = useState(0)
     const [slotTime, setslotTime] = useState('')
     const [relatedDoctors, setrelatedDoctors] = useState([])
+
+
+
     const dayOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 
     const fetchDoctorInfo = () => {
@@ -22,10 +29,11 @@ const DoctorPage = () => {
         }
     }
 
-    const fetchRelatedDoctor=()=>{
-        const foundRelatedDoctor= doctors.find((item)=>item.speciality===doctorinfo.speciality)
-        console.log(foundRelatedDoctor);
-        
+    const fetchRelatedDoctor = () => {
+        if (doctorinfo) {
+            const foundRelatedDoctor = doctors.filter((item) => item.speciality === doctorinfo.speciality)
+            setrelatedDoctors(foundRelatedDoctor)
+        }
     }
 
     const getAvailableSlots = () => {
@@ -52,24 +60,64 @@ const DoctorPage = () => {
             let timeSlot = []
             while (currentDate < endDate) {
                 let formatedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit" })
-                timeSlot.push({
-                    datetime: new Date(currentDate),
-                    time: formatedTime
-                })
+                const day = currentDate.getDate()
+                const month = currentDate.getMonth() + 1
+                const year = currentDate.getFullYear()
+                const slotTime = formatedTime
+                const slotDate = day + "_" + month + "_" + year
+                const slotAvailable = doctorinfo?.slots_Booked[slotDate] && doctorinfo.slots_Booked[slotDate].includes(slotTime) ? false : true;
+                if (slotAvailable) {
+                    timeSlot.push({
+                        datetime: new Date(currentDate),
+                        time: formatedTime
+                    })
+                }
                 currentDate.setMinutes(currentDate.getMinutes() + 30)
             }
-            setDoctorSlots(prev => ([...prev, timeSlot]))
+            if(timeSlot.length>0){
+                setDoctorSlots(prev => ([...prev, timeSlot]))
+            }
         }
     }
-    
+
+    const bookAppointments = async () => {
+        if (!token) {
+            toast.warn("login to book appointment")
+            return navigate("/login")
+        }
+        if (!slotTime) {
+            toast.warn("Select time for slot")
+            return
+        }
+        try {
+            const date = doctorSlots[slotIndex][0].datetime
+            const day = date.getDate()
+            const month = date.getMonth() + 1
+            const year = date.getFullYear()
+            const slotDate = day + "_" + month + "_" + year
+            const response = await axios.post(backendUrl + '/api/user/book-appointment', { slotDate, slotTime, doctorid }, { headers: { token } })
+            if (response.data.success) {
+                navigate('/myappointments')
+                toast.success(response.data.message)
+            }
+            else {
+                toast.error(response.data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
 
     useEffect(() => {
         fetchDoctorInfo()
         fetchRelatedDoctor()
     }, [doctors, doctorid])
     useEffect(() => {
-        getAvailableSlots()
-    }, [doctorid])
+        if(doctorinfo){
+            getAvailableSlots()
+        }
+    }, [doctorinfo])
     useEffect(() => {
         console.log(doctorSlots);
     }, [doctorSlots])
@@ -126,22 +174,39 @@ const DoctorPage = () => {
                         <div className="flex   gap-1.5  mt-4 horizontal-scroll scrollbar-hide " >
                             {
                                 doctorSlots.length && doctorSlots[slotIndex].map((item, index) => (
-                                    <p onClick={() => setslotTime(index)} className={`${slotTime === index ? "bg-blue-600 text-white font-medium " : null} border border-gray-300 py-1 cursor-pointer px-2 rounded-full `} key={index} >{item.time.toLowerCase()}</p>
+                                    <p onClick={() => setslotTime(item.time)} className={`${slotTime === item.time ? "bg-blue-600 text-white font-medium " : null} border border-gray-300 py-1 cursor-pointer px-2 rounded-full `} key={index} >{item.time.toLowerCase()}</p>
                                 ))
                             }
                         </div>
                         <div>
-                            <button className="w-full sm:w-60 px-2 py-2 rounded-full bg-blue-600 cursor-pointer text-white mt-3" >Book an Appointment</button>
+                            <button onClick={bookAppointments} className="w-full sm:w-60 px-2 py-2 rounded-full bg-blue-600 cursor-pointer text-white mt-5" >Book an Appointment</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div>
+            <div className="flex flex-col mt-25 justify-center items-center " >
                 <Title text1={"Related Doctors "} />
                 <p>Simply browse through our extensive list of trusted doctors.</p>
-                {
+                <div className="flex gap-3" >
 
-                }
+                    {
+                        relatedDoctors.map((doctor, index) => (
+                            <div onClick={() => navigate(`/doctors/${doctor._id}`, scrollTo(0, 0))} className='border mt-10 hover:transform hover:translate-y-[-10px]  transition-all duration-300 h-fit  w-fit cursor-pointer rounded-md border-gray-300' >
+                                <div className=' rounded-md w-[240px] bg-[#eaefff] transition-all duration-500  h-[240px] ' >
+                                    <img loading='lazy' className='w-[240px] h-[240px] object-cover ' src={doctor.image} alt="" />
+                                </div>
+                                <div className='ml-4' >
+                                    <div className='flex items-center text-green-500 gap-3 mt-3' >
+                                        <p className='font-black bg-green-500 h-2 w-2 rounded-full' ></p>
+                                        <p>available</p>
+                                    </div>
+                                    <p className='text-xl' >{doctor.name}</p>
+                                    <p className='pb-2 text-gray-400 text-sm' >{doctor.speciality}</p>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
         </>
     );

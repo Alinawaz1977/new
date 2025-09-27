@@ -16,7 +16,7 @@ const Navbar = () => {
         <NavLink to={"/contact"} className='hidden md:block' >CONTACT</NavLink>
         <NavLink to={"/about"} className='hidden md:block' >ABOUT</NavLink>
       </ul>
-      <button className=' hidden md:block cursor-pointer bg-blue-500 px-6 font-medium py-2 rounded-full text-white' >Create account</button>
+      <button onClick={()=>navigate("/login")} className=' hidden md:block cursor-pointer bg-blue-500 px-6 font-medium py-2 rounded-full text-white' >Create account</button>
       <img onClick={()=>setvisible(true)} className='w-6  block md:hidden ' src={assets.menu_icon} alt="menu-icon" />
     </nav>
     <div  className={`top-0 z-10 absolute bottom-0 left-0 overflow-hidden transition-all  bg-white ${visible?"w-full":"w-0"}`} >

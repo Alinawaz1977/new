@@ -7,11 +7,13 @@ import AdminLogin from './components/AdminLogin'
 import { ToastContainer, toast } from 'react-toastify';
 import { useEffect, useState } from 'react'
 import ListDoctor from './components/ListDoctor'
+import Dashboard from './components/Dashboard'
+import Appointments from './components/Appointments'
 
 export const backendUrl=import.meta.env.VITE_BACKEND_URI
 
 const App = () => {
-  const [token, setToken] = useState(localStorage.getItem("token")?localStorage.getItem("token"):"")
+ const [token, setToken] = useState(localStorage.getItem("token")?localStorage.getItem("token"):"")
 
  useEffect(() => {
  localStorage.setItem("token",token)
@@ -21,7 +23,7 @@ const App = () => {
 
   return (
     <>
-    <ToastContainer/>
+   <ToastContainer />
       {
         token === '' ? <AdminLogin setToken={setToken} /> :<>
     <Navbar/>
@@ -30,6 +32,8 @@ const App = () => {
       <Routes>
         <Route path='/add' element={<Add token={token} />} />
         <Route path='/listdoctor' element={<ListDoctor token={token} />} />
+        <Route path='/dashboard' element={<Dashboard token={token} />} />
+        <Route path='/appointments' element={<Appointments token={token} />} />
       </Routes>
     </div>
         </>

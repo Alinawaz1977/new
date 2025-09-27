@@ -1,0 +1,62 @@
+import React, { useContext } from 'react'
+import { assets } from '../assets/assets'
+import axios from 'axios'
+import { backendUrl } from '../App'
+import { toast } from 'react-toastify'
+import { useState ,useEffect} from 'react'
+import { DoctorContext } from '../Context/doctorContext'
+
+const BookedAppointment = () => {
+    const {token}=useContext(DoctorContext)
+    const [bookedDoctors, setbookedDoctors] = useState([])
+    const fetchBookedDoctors=async()=>{
+        try {
+            const response = await axios.post(backendUrl+"/api/user/list-appointments",{},{headers:{token}})
+            if(response.data.success){
+                setbookedDoctors(response.data.appointments) 
+            }
+            else{
+                toast.error(response.data.message)
+            }
+        } catch (error) {
+           toast.error(error.message) 
+        }
+    }
+    useEffect(() => {
+    fetchBookedDoctors()
+    }, [bookedDoctors])
+    
+  return (
+    <>
+    <p className='text-2xl my-4' >Booked Appointments</p>
+    {
+        bookedDoctors.map((doctors,index)=>(
+            <div key={index} className='flex justify-between flex-col sm:flex-row gap-5 items-center border-t py-4 border-gray-300' >
+
+    <div className='flex gap-2 flex-col sm:flex-row ' >
+        <img className='w-40' src={doctors.docData.image} alt="" />
+        <div >
+            <div>
+                <p className='text-xl' >{doctors.docData.name}</p>
+                <p className='text-gray-600' >{doctors.docData.speciality}</p>
+            </div>
+            <p className='mt-3' >Address</p>
+            <div className='mt-1' >
+                <p>{doctors.docData.address1}</p>
+                <p>{doctors.docData.address2}</p>
+            </div>
+            <p className='text-gray-800 mt-2' >Date & Time <span className='text-gray-500' > | {doctors.slotTime}</span></p>
+        </div>
+    </div>
+    <div className='flex flex-col gap-2  ' >
+        <button className='border cursor-pointer border-gray-600 px-2 py-1.5 w-50' >pay online</button>
+        <button className='border cursor-pointer border-gray-600 px-2 py-1.5 w-50' >cancel appointment</button>
+    </div>
+    </div>
+    ))
+}
+    </>
+  )
+}
+
+export default BookedAppointment

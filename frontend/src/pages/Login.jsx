@@ -9,7 +9,6 @@ import { useContext } from 'react'
 import { DoctorContext } from '../Context/doctorContext'
 const Login = () => {
     const {token,settoken}=useContext(DoctorContext)
-    console.log(token);
     
     const {
         register,
@@ -18,7 +17,6 @@ const Login = () => {
         formState: { errors },
     } = useForm()
     const [loginType, setloginType] = useState('Login')
-    console.log(loginType);
 
     const changeType = () => {
         setloginType(prev => (prev === "Login" ? "SignUp" : "Login"))
@@ -30,6 +28,8 @@ const Login = () => {
                 const response = await axios.post(backendUrl + "/api/user/login", data)
                 if (response.data.success) {
                     settoken(response.data.token)
+                    localStorage.setItem("token",response.data.token)
+                    
                 }
                 else {
                     toast.error(response.data.message)
@@ -39,6 +39,7 @@ const Login = () => {
                 const response = await axios.post(backendUrl + "/api/user/create", data)
                 if (response.data.success) {
                     settoken(response.data.token)
+                    console.log(response.data.token);
                 }
                 else {
                     toast.error(response.data.message)

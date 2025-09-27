@@ -13,6 +13,7 @@ import ContactUs from './pages/ContactUs';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import DoctorPage from './pages/DoctorPage';
+import BookedAppointment from './pages/BookedAppointment';
 
 export const backendUrl=import.meta.env.VITE_BACKEND_URI
 
@@ -30,6 +31,7 @@ const App = () => {
         <Route path='/profile' element={<Profile/>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/doctors/:doctorid' element={<DoctorPage/>} />
+        <Route path='/myappointments' element={<BookedAppointment/>} />
       </Routes>
       <Footer/>
     </div>

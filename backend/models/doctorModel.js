@@ -49,19 +49,9 @@ const doctorschema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
-    slots: [
-        {
-            day: { type: String },
-            times: [
-                {
-                    time: {
-                        type: String,
-                    },
-                    isBooked: { type: Boolean, default: false }
-                }
-            ]
-        }
-    ]
+    slots_Booked:{
+        type:Object,default:{}
+    }
 },{minimize:false})
 
 const doctormodel = mongoose.models.doctor || mongoose.model("doctor", doctorschema)

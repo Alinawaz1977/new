@@ -11,7 +11,8 @@ export const DoctorContext = createContext();
 export const DoctorContextProvider = (props) => {
     const [doctors, setDoctors] = useState([]);
     const [filter, setfilter] = useState(false)
-    const [token, settoken] = useState('')
+    const [token, settoken] = useState(localStorage.getItem("token")||null)
+
     
 
     const fetchDoctors = async () => {
