@@ -34,7 +34,7 @@ const BookedAppointment = () => {
             <div key={index} className='flex justify-between flex-col sm:flex-row gap-5 items-center border-t py-4 border-gray-300' >
 
     <div className='flex gap-2 flex-col sm:flex-row ' >
-        <img className='w-40' src={doctors.docData.image} alt="" />
+        <img className=' object-cover w-40' src={doctors.docData.image} alt="" />
         <div >
             <div>
                 <p className='text-xl' >{doctors.docData.name}</p>
@@ -49,8 +49,8 @@ const BookedAppointment = () => {
         </div>
     </div>
     <div className='flex flex-col gap-2  ' >
-        <button className='border cursor-pointer border-gray-600 px-2 py-1.5 w-50' >pay online</button>
-        <button className='border cursor-pointer border-gray-600 px-2 py-1.5 w-50' >cancel appointment</button>
+        <button className='border cursor-pointer border-gray-300 px-2 transtional duration-200 py-1.5 hover:bg-blue-600 hover:text-white w-50' >pay online</button>
+        <button className='border cursor-pointer transtional duration-200 py-1.5 hover:bg-red-600 hover:text-white border-gray-300  px-2  w-50' >Cancel appointment</button>
     </div>
     </div>
     ))

@@ -100,24 +100,27 @@ const allPatients = async (req, res) => {
         const patients = await userModel.find()
         res.send({ success: true, patients })
     } catch (error) {
-        res.send({success:false,message:error.message})
+        res.send({ success: false, message: error.message })
     }
 }
 
 const cancelFeature = async (req, res) => {
     try {
-        
-        const { appointmentid } = req.body
-        const appointment = await appointmentModel.findById(appointmentid)
-        if(!appointment){
-            res.send({success:false,message:"Doctor not found"})
-        }
-        appointment.cancelled = true;
-        await appointment.save()
-        res.send({ success: true, message: "Appointment cancelled successfully", appointment });
-    } catch (error) {
-        res.send({success:false,message:"Appointment cancelled successfully"})
-    }
-    }
 
-export { createUser, loginUser, bookAppointment,allPatients, listAppointments,cancelFeature,listAllAppointments}
+        const { appointmentid,slotDate,slotTime } = req.body
+        const appointment = await appointmentModel.findById(appointmentid)
+        const doctor = await doctormodel.findById(appointment.docData._id)
+        const slots_Booked = doctor.slots_Booked;
+        if (slots_Booked[slotDate]) {
+            slots_Booked.filter((time)=>time!==slotTime)
+        }
+        appointment.cancelled=true
+        await appointment.save()
+        await doctor.save()
+        res.send({success:true,appointment,message:"appointment cancelled"})
+    } catch (error) {
+        res.send({ success: false,doctor, message: "Appointment cancelled successfully" })
+    }
+}
+
+export { createUser, loginUser, bookAppointment, allPatients, listAppointments, cancelFeature, listAllAppointments }
