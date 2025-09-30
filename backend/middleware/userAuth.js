@@ -10,7 +10,8 @@ const authUser = (req, res, next) => {
         if (!decode_Token) {
             res.send({ success: false, message: "Invalid Credentials login again" })
         }
-        req.body.userid=decode_Token.id
+          req.body = req.body || {}; // ✅ Ensure it's initialized
+        req.body.userid = decode_Token.id;
         next()
 
     } catch (error) {

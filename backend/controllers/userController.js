@@ -3,6 +3,7 @@ import bcrypt, { hash } from "bcrypt"
 import createtoken from "../utils/userToken.js"
 import doctormodel from "../models/doctorModel.js"
 import appointmentModel from "../models/appointmentModel.js"
+import { v2 as cloudinary } from "cloudinary"
 
 const createUser = async (req, res) => {
     try {
@@ -106,21 +107,81 @@ const allPatients = async (req, res) => {
 
 const cancelFeature = async (req, res) => {
     try {
+        const { appointmentid, slotDate, slotTime } = req.body;
 
-        const { appointmentid,slotDate,slotTime } = req.body
-        const appointment = await appointmentModel.findById(appointmentid)
-        const doctor = await doctormodel.findById(appointment.docData._id)
-        const slots_Booked = doctor.slots_Booked;
-        if (slots_Booked[slotDate]) {
-            slots_Booked.filter((time)=>time!==slotTime)
+        const appointment = await appointmentModel.findById(appointmentid);
+        if (!appointment) {
+            return res.status(404).send({ success: false, message: "Appointment not found" });
         }
-        appointment.cancelled=true
-        await appointment.save()
-        await doctor.save()
-        res.send({success:true,appointment,message:"appointment cancelled"})
+
+        const doctor = await doctormodel.findById(appointment.docData._id);
+        if (!doctor) {
+            return res.status(404).send({ success: false, message: "Doctor not found" });
+        }
+
+        // Remove the slot
+        if (doctor.slots_Booked && doctor.slots_Booked[slotDate]) {
+            doctor.slots_Booked[slotDate] = doctor.slots_Booked[slotDate].filter(
+                (time) => time !== slotTime
+            );
+
+            if (doctor.slots_Booked[slotDate].length === 0) {
+                delete doctor.slots_Booked[slotDate];
+            }
+
+            // ✅ Mark as modified so Mongoose knows it changed
+            doctor.markModified('slots_Booked');
+        }
+
+        // Mark appointment as cancelled
+        appointment.cancelled = true;
+
+        // Save both
+        await doctor.save();
+        await appointment.save();
+
+        res.send({ success: true, appointment, message: "Appointment cancelled" });
+
     } catch (error) {
-        res.send({ success: false,doctor, message: "Appointment cancelled successfully" })
+        res.status(500).send({ success: false, message: error.message });
+    }
+};
+
+// for user profile editing
+
+const updateProfile = async (req, res) => {
+    try {
+        const { userid, address1, address2, gender, dob, phone } = req.body
+        const user = await userModel.findById(userid)
+        const image = req.file
+        console.log(image);
+        const imageUrl = await cloudinary.uploader.upload(image.path, { resource_type: 'image' })
+        console.log(imageUrl);
+
+        user.image = imageUrl.secure_url
+        user.address1 = address1
+        user.address2 = address2
+        user.gender = gender
+        user.dob = dob
+        user.phone = phone
+        await user.save()
+        res.send({ success: true, message: "profile Updated" })
+    } catch (error) {
+        res.send({ success: false, message: error.message })
     }
 }
 
-export { createUser, loginUser, bookAppointment, allPatients, listAppointments, cancelFeature, listAllAppointments }
+const findUser = async (req, res) => {
+    try {
+        const { userid } = req.body
+        const user = await userModel.findById(userid)
+        res.send({ success: true, user })
+    } catch (error) {
+        res.send({ success: false, message: error.message })
+
+    }
+}
+
+
+
+export { createUser, loginUser, bookAppointment, findUser, updateProfile, allPatients, listAppointments, cancelFeature, listAllAppointments }

@@ -16,10 +16,19 @@ const userSchema= new mongoose.Schema({
         require:true,
         type:String
     },
-    age:{
+    dob:{
         type:Number
     },
     gender:{
+        type:String
+    },
+    phone:{
+        type:Number
+    },
+    address1:{
+        type:String
+    },
+    address2:{
         type:String
     }
 })

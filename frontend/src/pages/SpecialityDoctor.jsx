@@ -28,8 +28,8 @@ const SpecialityDoctor = () => {
         <Sidebar/>
        <div className='flex justify-center gap-5 flex-wrap  mt-5  ' >
         {
-          specialDoctor.map((doctor) => (
-            <div className='border hover:transform hover:translate-y-[-10px] transition-all duration-300 h-fit w-fit cursor-pointer rounded-md border-gray-300' >
+          specialDoctor.map((doctor,index) => (
+            <div key={index} className='border hover:transform hover:translate-y-[-10px] transition-all duration-300 h-fit w-fit cursor-pointer rounded-md border-gray-300' >
               <div className=' rounded-md w-[240px] bg-[#eaefff]  h-[240px] ' >
                 <img loading='lazy' className='w-[240px] h-[240px] object-cover ' src={doctor.image} alt="" />
               </div>

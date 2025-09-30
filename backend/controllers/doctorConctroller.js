@@ -1,4 +1,4 @@
-import doctormodel from "../models/doctorModel.js"
+    import doctormodel from "../models/doctorModel.js"
 import { v2 as cloudinary } from "cloudinary"
 
 

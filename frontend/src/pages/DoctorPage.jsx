@@ -17,6 +17,8 @@ const DoctorPage = () => {
     const [slotIndex, setSlotIndex] = useState(0)
     const [slotTime, setslotTime] = useState('')
     const [relatedDoctors, setrelatedDoctors] = useState([])
+    console.log(doctorSlots);
+    
 
 
 
@@ -59,7 +61,7 @@ const DoctorPage = () => {
             }
             let timeSlot = []
             while (currentDate < endDate) {
-                let formatedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit" })
+                let formatedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit",hour12:true   })
                 const day = currentDate.getDate()
                 const month = currentDate.getMonth() + 1
                 const year = currentDate.getFullYear()

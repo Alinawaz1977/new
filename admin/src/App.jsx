@@ -10,32 +10,30 @@ import ListDoctor from './components/ListDoctor'
 import Dashboard from './components/Dashboard'
 import Appointments from './components/Appointments'
 
-export const backendUrl=import.meta.env.VITE_BACKEND_URI
+export const backendUrl = import.meta.env.VITE_BACKEND_URI
 
 const App = () => {
- const [token, setToken] = useState(localStorage.getItem("token")?localStorage.getItem("token"):"")
+  const [token, setToken] = useState(localStorage.getItem("token") ? localStorage.getItem("token") : "")
 
- useEffect(() => {
- localStorage.setItem("token",token)
- }, [token])
- 
-  
+  useEffect(() => {
+    localStorage.setItem("token", token)
+  }, [token])
 
   return (
     <>
-   <ToastContainer />
+      <ToastContainer />
       {
-        token === '' ? <AdminLogin setToken={setToken} /> :<>
-    <Navbar/>
-    <div className='flex pt-16 bg-slate-100 gap-6 border-b h-screen overflow-hidden border-gray-400 ' >
-      <Sidebar/>
-      <Routes>
-        <Route path='/add' element={<Add token={token} />} />
-        <Route path='/listdoctor' element={<ListDoctor token={token} />} />
-        <Route path='/dashboard' element={<Dashboard token={token} />} />
-        <Route path='/appointments' element={<Appointments token={token} />} />
-      </Routes>
-    </div>
+        token === '' ? <AdminLogin setToken={setToken} /> : <>
+          <Navbar />
+          <div className='flex pt-16 bg-slate-100 gap-6 border-b h-screen overflow-hidden border-gray-400 ' >
+            <Sidebar />
+            <Routes>
+              <Route path='/add' element={<Add token={token} />} />
+              <Route path='/listdoctor' element={<ListDoctor token={token} />} />
+              <Route path='/dashboard' element={<Dashboard token={token} />} />
+              <Route path='/appointments' element={<Appointments token={token} />} />
+            </Routes>
+          </div>
         </>
       }
     </>
