@@ -17,7 +17,7 @@ const userSchema= new mongoose.Schema({
         type:String
     },
     dob:{
-        type:Number
+        type:String
     },
     gender:{
         type:String

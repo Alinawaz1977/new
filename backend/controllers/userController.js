@@ -153,16 +153,19 @@ const updateProfile = async (req, res) => {
     try {
         const { userid, address1, address2, gender, dob, phone } = req.body
         const user = await userModel.findById(userid)
-        const image = req.file
-        console.log(image);
-        const imageUrl = await cloudinary.uploader.upload(image.path, { resource_type: 'image' })
-        console.log(imageUrl);
-
-        user.image = imageUrl.secure_url
+        const image =  req.file
+        if(image){
+            const imageUrl = await cloudinary.uploader.upload(image.path, { resource_type: 'image' })
+            user.image = imageUrl.secure_url
+        }
+        const birthDate = new Date(dob)
+        const today = new Date()
+        const age =  today.getFullYear()-birthDate.getFullYear() 
+        console.log(age);
         user.address1 = address1
         user.address2 = address2
         user.gender = gender
-        user.dob = dob
+        user.dob = age
         user.phone = phone
         await user.save()
         res.send({ success: true, message: "profile Updated" })
