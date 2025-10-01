@@ -21,9 +21,9 @@ const App = () => {
 
   return (
     <>
-      <ToastContainer />
       {
         token === '' ? <AdminLogin setToken={setToken} /> : <>
+        <ToastContainer />
           <Navbar />
           <div className='flex pt-16 bg-slate-100 gap-6 border-b h-screen overflow-hidden border-gray-400 ' >
             <Sidebar />

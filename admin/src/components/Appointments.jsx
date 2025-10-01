@@ -1,13 +1,19 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../Context/AppContext'
 import { assets } from '../assets/assets'
+import { backendUrl } from '../App'
+import axios from 'axios'
+import { useState,useEffect } from 'react'
 
 const Appointments = () => {
-  const {appointments}=useContext(AppContext)
+  const {token,appointments}=useContext(AppContext)
+  
+
+
   return appointments.length < 1 ? <p className='text-3xl mx-auto my-auto' >No Appointments to Show</p> :(
     <div className='p-3 ' >
       <p className='py-3' >All Appointments</p>
-      <div className='border overflow-scroll min-h-auto border-gray-300' >
+      <div className='border overflow-scroll  h-screen border-gray-300' >
 
       <div className='grid px-10  py-3  grid-cols-[1fr_1.5fr_1.5fr_1fr_2.5fr_2.5fr_1fr_1fr] bg-white w-[70vw]  ' >
         <p>#</p>
@@ -21,9 +27,9 @@ const Appointments = () => {
       {
         appointments.map((appointment,index)=>(
          
-          <div className=' text-gray-600 grid items-center px-10 border-t border-gray-300 py-3 bg-white grid-cols-[1fr_1.5fr_1.5fr_1fr_2.5fr_2.5fr_1fr_1fr] text-sm w-[70vw]' >
+          <div  key={index} className=' text-gray-600 grid items-center px-10 border-t border-gray-300 py-3 bg-white grid-cols-[1fr_1.5fr_1.5fr_1fr_2.5fr_2.5fr_1fr_1fr]  text-sm w-[70vw]' >
             <p>{index+1}</p>
-        <p>{appointment.userData.name}</p>
+        <p className='flex gap-2 items-center'  ><img className='w-7 object-cover h-7 rounded-full ' src={appointment.userData?.image} alt="" />{appointment.userData.name}</p>
         <p>{appointment.userData.name}</p>
         <p>Age</p>
         <p>{appointment.slotDate} || {appointment.slotTime}</p>

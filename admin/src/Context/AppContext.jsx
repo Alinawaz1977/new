@@ -11,7 +11,6 @@ export const AppContextProvider = (props) => {
     const [doctors, setdoctors] = useState([])
     const [appointments, setappointments] = useState([])
     const [patients, setpatients] = useState([])
-    console.log(patients);
     
 
     const fetchDoctors = async () => {

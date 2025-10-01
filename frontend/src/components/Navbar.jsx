@@ -39,7 +39,7 @@ const Navbar = () => {
           <NavLink to={"/contact"} className='hidden md:block' >CONTACT</NavLink>
           <NavLink to={"/about"} className='hidden md:block' >ABOUT</NavLink>
         </ul>
-        {token?<img onClick={()=>navigate("/profile")} loading='lazy' className='w-10 cursor-pointer rounded-full' src={userDet?.image}/>:<button onClick={() => navigate("/login")} className=' hidden md:block cursor-pointer bg-blue-500 px-6 font-medium py-2 rounded-full text-white' >Create account</button>}
+        {token?<img onClick={()=>navigate("/profile")} loading='lazy' className='w-10 h-10 object-cover cursor-pointer rounded-full' src={userDet?.image}/>:<button onClick={() => navigate("/login")} className=' hidden md:block cursor-pointer bg-blue-500 px-6 font-medium py-2 rounded-full text-white' >Create account</button>}
         
         <img onClick={() => setvisible(true)} className='w-6  block md:hidden ' src={assets.menu_icon} alt="menu-icon" />
       </nav>
