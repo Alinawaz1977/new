@@ -26,6 +26,7 @@ const App = () => {
 
   return (
     <>
+<<<<<<< HEAD
       <ToastContainer />
       {/* {
         token === '' && <AdminLogin setToken={setToken} />
@@ -46,6 +47,23 @@ const App = () => {
       <Routes>
             <Route path='/login' element={<AdminLogin setToken={setToken} />}  />
       </Routes>
+=======
+      {
+        token === '' ? <AdminLogin setToken={setToken} /> : <>
+        <ToastContainer />
+          <Navbar />
+          <div className='flex pt-16 bg-slate-100 gap-6 border-b h-screen overflow-hidden border-gray-400 ' >
+            <Sidebar />
+            <Routes>
+              <Route path='/add' element={<Add token={token} />} />
+              <Route path='/listdoctor' element={<ListDoctor token={token} />} />
+              <Route path='/dashboard' element={<Dashboard token={token} />} />
+              <Route path='/appointments' element={<Appointments token={token} />} />
+            </Routes>
+          </div>
+        </>
+      }
+>>>>>>> c7bfdca2ec6e590849b459b299c338d8387d5462
     </>
   )
 }

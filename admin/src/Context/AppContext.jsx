@@ -12,7 +12,6 @@ export const AppContextProvider = (props) => {
     const [dtoken, setdtoken] = useState('')
     const [appointments, setappointments] = useState([])
     const [patients, setpatients] = useState([])
-    console.log(patients);
     
 
     const fetchDoctors = async () => {
