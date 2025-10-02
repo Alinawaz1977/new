@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 export const AppContext = createContext()
 export const AppContextProvider = (props) => {
     const [doctors, setdoctors] = useState([])
+    const [dtoken, setdtoken] = useState('')
     const [appointments, setappointments] = useState([])
     const [patients, setpatients] = useState([])
     console.log(patients);
@@ -64,7 +65,7 @@ export const AppContextProvider = (props) => {
     }, [])
 
     const value = {
-        doctors,appointments,patients
+        doctors,appointments,patients,dtoken,setdtoken
     }
     return (
         <AppContext.Provider value={value} >

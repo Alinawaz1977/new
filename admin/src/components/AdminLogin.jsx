@@ -3,8 +3,13 @@ import Title from './Title'
 import axios from "axios"
 import { backendUrl } from '../App'
 import { toast } from 'react-toastify'
+import { useContext } from 'react'
+import { AppContext } from '../Context/AppContext'
 
 const AdminLogin = ({ setToken }) => {
+  const { dtoken, setdtoken } = useContext(AppContext)
+  console.log(dtoken);
+  
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loginType, setLoginType] = useState('admin') // default to admin
@@ -15,16 +20,34 @@ const AdminLogin = ({ setToken }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    try {
-      const response = await axios.post(backendUrl + "/api/admin/login", { email, password })
-      if (response.data.success) {
-        setToken(response.data.token)
+
+    if (loginType === 'admin') {
+      try {
+        const response = await axios.post(backendUrl + "/api/admin/login", { email, password })
+        if (response.data.success) {
+          setToken(response.data.token)
+        }
+        else {
+          toast.error(response.error.message)
+        }
+      } catch (error) {
+        toast.error(error.message)
       }
-      else {
-        toast.error(response.error.message)
+    }
+
+    else {
+      try {
+        const response = await axios.post(backendUrl + "/api/doctor/login", { email, password })
+        if (response.data.success) {
+          setdtoken(response.data.token)
+        }
+        else {
+          toast.error(response.error.message)
+        }
       }
-    } catch (error) {
-      toast.error(error.message)
+      catch (error) {
+        toast.error(error.message)
+      }
     }
   }
 
@@ -74,5 +97,4 @@ const AdminLogin = ({ setToken }) => {
     </div>
   )
 }
-
 export default AdminLogin

@@ -7,8 +7,9 @@ import { data } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useContext } from 'react'
 import { DoctorContext } from '../Context/doctorContext'
+import { AppContext } from '../../../admin/src/Context/AppContext'
 const Login = () => {
-    const {token,settoken}=useContext(DoctorContext)
+    const {token,settoken}=useContext(AppContext)
     
     const {
         register,

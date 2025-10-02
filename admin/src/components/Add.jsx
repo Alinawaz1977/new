@@ -51,6 +51,8 @@ const Add = ({ token }) => {
 
   return (
     <>
+    {
+      token && 
       <div className="flex flex-col">
         <p className="font-medium my-3">Add Doctor</p>
         <div className="border pt-5 pl-8 pr-8 border-gray-300 w-[60vw] bg-white h-[83vh] overflow-auto">
@@ -72,26 +74,26 @@ const Add = ({ token }) => {
                 className="w-full py-1.5 px-3 border-2 rounded-sm border-gray-300"
                 {...register("name")}
                 placeholder="name"
-              />
+                />
               <p className="my-2">Doctor Email</p>
               <input
                 className="w-full py-1.5 px-3 border-2 rounded-sm border-gray-300"
                 {...register("email")}
                 placeholder="Email"
-              />
+                />
 
               <p className="my-2">Doctor Password</p>
               <input
                 className="w-full py-1.5 px-3 border-2 rounded-sm border-gray-300"
                 {...register("password")}
                 placeholder="Password"
-              />
+                />
 
               <p className="my-2">Experience</p>
               <select
                 className="py-1.5 block px-2 w-full border-2 border-gray-400 rounded-sm"
                 {...register("experience")}
-              >
+                >
                 <option value="5">5 years</option>
                 <option value="6">6 years</option>
                 <option value="7">7 years</option>
@@ -106,7 +108,7 @@ const Add = ({ token }) => {
                 type="number"
                 {...register("fee")}
                 placeholder="Fee"
-              />
+                />
             </div>
 
             {/* Right Column */}
@@ -116,13 +118,13 @@ const Add = ({ token }) => {
                 className="w-full py-1.5 px-3 border-2 rounded-sm border-gray-300"
                 {...register("degree")}
                 placeholder="Degree"
-              />
+                />
               <p className="my-2">Speciality</p>
               <input
                 className="w-full py-1.5 px-3 border-2 rounded-sm border-gray-300"
                 {...register("speciality")}
                 placeholder="speciality"
-              />
+                />
 
               <div className="flex flex-col gap-1.5 mt-2">
                 <p>Address</p>
@@ -130,12 +132,12 @@ const Add = ({ token }) => {
                   className="w-full py-1.5 px-3 border-2 rounded-sm border-gray-300"
                   {...register("address1")}
                   placeholder="Address 1"
-                />
+                  />
                 <input
                   className="w-full py-1.5 px-3 border-2 rounded-sm border-gray-300"
                   {...register("address2")}
                   placeholder="Address 2"
-                />
+                  />
               </div>
             </div>
 
@@ -146,7 +148,7 @@ const Add = ({ token }) => {
                 className="block py-1.5 px-2 w-full border-2 border-gray-400 rounded-sm"
                 {...register("description")}
                 placeholder="Write about doctor"
-              ></textarea>
+                ></textarea>
             </div>
 
             {/* Submit button full width */}
@@ -155,8 +157,8 @@ const Add = ({ token }) => {
                 <Lottie animationData={loader} loop={true} className="w-30 h-30" />
               ) : (
                 <button
-                  className="py-1.5 px-6 rounded-full cursor-pointer text-white font-medium bg-blue-600"
-                  type="submit"
+                className="py-1.5 px-6 rounded-full cursor-pointer text-white font-medium bg-blue-600"
+                type="submit"
                 >
                   Add a Doctor
                 </button>
@@ -166,6 +168,7 @@ const Add = ({ token }) => {
           </form>
         </div>
       </div>
+  }
     </>
   )
 }

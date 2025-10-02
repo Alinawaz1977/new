@@ -3,10 +3,13 @@
     import { AppContext } from '../Context/AppContext'
 
     const Dashboard = () => {
-        const { doctors ,appointments,patients} = useContext(AppContext)
+        const { doctors ,token,appointments,patients} = useContext(AppContext)
         console.log(appointments);
         
         return (
+            <>
+            {
+                token && 
             <div>
                 <div className='flex gap-2 mt-5'>
                     <div className='border border-gray-200 flex items-center bg-white w-[200px]  ' >
@@ -52,6 +55,8 @@
                 }
                 </div>
             </div>
+            }
+                </>
         )
     }
 

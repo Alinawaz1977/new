@@ -15,7 +15,7 @@ import Login from './pages/Login';
 import DoctorPage from './pages/DoctorPage';
 import BookedAppointment from './pages/BookedAppointment';
 
-export const backendUrl=import.meta.env.VITE_BACKEND_URI
+export const backendUrl = import.meta.env.VITE_BACKEND_URI
 
 const App = () => {
   return (
@@ -24,16 +24,16 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/doctors' element={<Doctors/>} />
-        <Route path='/doctors/category/:speciality' element={<SpecialityDoctor/>} />
-        <Route path='/about'element={<About/>} />
-        <Route path='/contact' element={<ContactUs/>} />
-        <Route path='/profile' element={<Profile/>} />
-        <Route path='/login' element={<Login/>} />
-        <Route path='/doctors/:doctorid' element={<DoctorPage/>} />
-        <Route path='/myappointments' element={<BookedAppointment/>} />
+        <Route path='/doctors' element={<Doctors />} />
+        <Route path='/doctors/category/:speciality' element={<SpecialityDoctor />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<ContactUs />} />
+        <Route path='/profile' element={<Profile />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/doctors/:doctorid' element={<DoctorPage />} />
+        <Route path='/myappointments' element={<BookedAppointment />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </div>
   )
 }

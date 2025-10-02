@@ -9,10 +9,15 @@ import { useEffect, useState } from 'react'
 import ListDoctor from './components/ListDoctor'
 import Dashboard from './components/Dashboard'
 import Appointments from './components/Appointments'
+import DoctorDashboard from './components/doctors/DoctorDashboard'
+import Login from '../../frontend/src/pages/Login'
+import { useContext } from 'react'
+import { AppContext } from './Context/AppContext'
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URI
 
 const App = () => {
+  const {dtoken}=useContext(AppContext)
   const [token, setToken] = useState(localStorage.getItem("token") ? localStorage.getItem("token") : "")
 
   useEffect(() => {
@@ -22,20 +27,25 @@ const App = () => {
   return (
     <>
       <ToastContainer />
-      {
-        token === '' ? <AdminLogin setToken={setToken} /> : <>
-          <Navbar />
-          <div className='flex pt-16 bg-slate-100 gap-6 border-b h-screen overflow-hidden border-gray-400 ' >
-            <Sidebar />
-            <Routes>
-              <Route path='/add' element={<Add token={token} />} />
-              <Route path='/listdoctor' element={<ListDoctor token={token} />} />
-              <Route path='/dashboard' element={<Dashboard token={token} />} />
-              <Route path='/appointments' element={<Appointments token={token} />} />
-            </Routes>
-          </div>
-        </>
-      }
+      {/* {
+        token === '' && <AdminLogin setToken={setToken} />
+      } */}
+      {token || dtoken ?<>
+        <Navbar />
+        <div className='flex pt-16 bg-slate-100 gap-6 border-b h-screen overflow-hidden border-gray-400 ' >
+          <Sidebar />
+          <Routes>
+            <Route path='/add' element={<Add token={token} />} />
+            <Route path='/listdoctor' element={<ListDoctor token={token} />} />
+            <Route path='/dashboard' element={<Dashboard token={token} />} />
+            <Route path='/appointments' element={<Appointments token={token} />} />
+            <Route path='/doctor-dashboard' element={<DoctorDashboard/>} />
+          </Routes>
+        </div>
+      </>:''}
+      <Routes>
+            <Route path='/login' element={<AdminLogin setToken={setToken} />}  />
+      </Routes>
     </>
   )
 }
