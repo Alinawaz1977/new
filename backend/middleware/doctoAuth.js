@@ -12,7 +12,6 @@ const docAuth = (req, res, next) => {
     } catch (error) {
         res.send({ success: false, message: error.message })
     }
-
 }
 
 export default docAuth
