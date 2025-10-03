@@ -3,15 +3,27 @@ import { useContext } from 'react'
 import { NavLink, Links } from 'react-router-dom'
 import { AppContext } from '../../Context/AppContext'
 import { assets } from '../../assets/assets'
+import axios from "axios"
+import { backendUrl } from '../../App'
 
 const DoctorDashboard = () => {
   const {doctors,appointments,patients}=useContext(AppContext)
+  const [patientsDetails, setpatientsDetails] = useState([])
+
+  const patientsDets=async()=>{
+ try {
+  const response=await axios.post(backendUrl+'/api/doctor/patient',{})
+ } catch (error) {
+  
+ }
+  }
+
   return(
 
     <div>
     <div className='flex gap-2 mt-5'>
       <div className='border border-gray-200 flex items-center bg-white w-[200px]  ' >
-        <img className='w-20' src={assets.doctor_icon} alt="doctoricon" />
+        <img className='w-20' src={assets.earning_icon} alt="doctoricon" />
         <div>
           <p className='font-medium' >{doctors.length}</p>
           <p className='text-gray-700' >doctors</p>

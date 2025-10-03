@@ -9,7 +9,7 @@ import { useContext } from 'react'
 import { DoctorContext } from '../Context/doctorContext'
 import { AppContext } from '../../../admin/src/Context/AppContext'
 const Login = () => {
-    const {token,settoken}=useContext(AppContext)
+    const {token,settoken}=useContext(DoctorContext)
     
     const {
         register,
