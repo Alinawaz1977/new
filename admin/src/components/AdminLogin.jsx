@@ -5,9 +5,11 @@ import { backendUrl } from '../App'
 import { toast } from 'react-toastify'
 import { useContext } from 'react'
 import { AppContext } from '../Context/AppContext'
+import { useNavigate } from 'react-router-dom'
 
-const AdminLogin = ({ setToken }) => {
-  const { dtoken, setdtoken } = useContext(AppContext)
+const AdminLogin = () => {
+  const { dtoken, setdtoken,settoken,token } = useContext(AppContext)
+  const navigate=useNavigate()
   console.log(dtoken);
   
   const [email, setEmail] = useState('')
@@ -25,10 +27,11 @@ const AdminLogin = ({ setToken }) => {
       try {
         const response = await axios.post(backendUrl + "/api/admin/login", { email, password })
         if (response.data.success) {
-          setToken(response.data.token)
+          settoken(
+          response.data.token)
         }
         else {
-          toast.error(response.error.message)
+          toast.error(response.data.message)
         }
       } catch (error) {
         toast.error(error.message)
@@ -40,9 +43,12 @@ const AdminLogin = ({ setToken }) => {
         const response = await axios.post(backendUrl + "/api/doctor/login", { email, password })
         if (response.data.success) {
           setdtoken(response.data.token)
+          console.log(response.data.token);
+          navigate("/doctor-dashboard ")
+          
         }
         else {
-          toast.error(response.error.message)
+          toast.error(response.data.message)
         }
       }
       catch (error) {

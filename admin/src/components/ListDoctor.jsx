@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import { AppContext } from '../Context/AppContext'
 const ListDoctor = () => {
 
-    const { doctors } = useContext(AppContext)
+    const { doctors ,token} = useContext(AppContext)
     console.log("doc", doctors);
 
     return (

@@ -10,9 +10,11 @@ export const AppContext = createContext()
 export const AppContextProvider = (props) => {
     const [doctors, setdoctors] = useState([])
     const [dtoken, setdtoken] = useState('')
+    const [token, settoken] = useState('')
+
     const [appointments, setappointments] = useState([])
     const [patients, setpatients] = useState([])
-    
+  
 
     const fetchDoctors = async () => {
         try {
@@ -64,7 +66,7 @@ export const AppContextProvider = (props) => {
     }, [])
 
     const value = {
-        doctors,appointments,patients,dtoken,setdtoken
+        doctors, appointments, patients, dtoken, setdtoken, token, settoken
     }
     return (
         <AppContext.Provider value={value} >
