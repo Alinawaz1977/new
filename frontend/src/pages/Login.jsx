@@ -7,7 +7,6 @@ import { data, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useContext } from 'react'
 import { DoctorContext } from '../Context/doctorContext'
-import { AppContext } from '../../../admin/src/Context/AppContext'
 const Login = () => {
     const navigate = useNavigate()
     const { token, settoken } = useContext(DoctorContext)
