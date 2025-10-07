@@ -49,7 +49,7 @@ const Navbar = () => {
               token && <div className='flex flex-col w-36 bg-slate-100 px-5 py-3 text-gray-600 ' >
                 <p onClick={() => navigate("/myappointments")} className='cursor-pointer font-medium transition-all hover:text-black' >My appointments</p>
                 <p onClick={() => navigate("/myappointments")} className='cursor-pointer font-medium transition-all hover:text-black' >my appointments</p>
-                <p onClick={() => settoken("")} className='cursor-pointer font-medium transition-all hover:text-black' >Logout</p>
+                <p onClick={() => {settoken("");navigate("/login")}} className='cursor-pointer font-medium transition-all hover:text-black' >Logout</p>
               </div>
             }
           </div>

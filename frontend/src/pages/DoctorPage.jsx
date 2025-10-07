@@ -50,7 +50,7 @@ const DoctorPage = () => {
             // setting the end time of the date with index
             let endDate = new Date()
             endDate.setDate(today.getDate() + i)
-            endDate.setHours(21, 0, 30, 0)
+            endDate.setHours(21, 0, 0, 0)
             if (today.getDate() === currentDate.getDate()) {
                 currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10)
                 currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0)
@@ -194,19 +194,19 @@ const DoctorPage = () => {
                     {
                         relatedDoctors.map((doctor, index) => (
                             <Link to={`/doctors/${doctor._id}`} >
-                            <div onClick={() => navigate(`/doctors/${doctor._id}`, scrollTo(0, 0))} className='border mt-10 hover:transform hover:translate-y-[-10px]  transition-all duration-300 h-fit  w-fit cursor-pointer rounded-md border-gray-300' >
-                                <div className=' rounded-md w-[240px] bg-[#eaefff] transition-all duration-500  h-[240px] ' >
-                                    <img loading='lazy' className='w-[240px] h-[240px] object-cover ' src={doctor.image} alt="" />
-                                </div>
-                                <div className='ml-4' >
-                                    <div className='flex items-center text-green-500 gap-3 mt-3' >
-                                        <p className='font-black bg-green-500 h-2 w-2 rounded-full' ></p>
-                                        <p>available</p>
+                                <div onClick={() => navigate(`/doctors/${doctor._id}`, scrollTo(0, 0))} className='border mt-10 hover:transform hover:translate-y-[-10px]  transition-all duration-300 h-fit  w-fit cursor-pointer rounded-md border-gray-300' >
+                                    <div className=' rounded-md w-[240px] bg-[#eaefff] transition-all duration-500  h-[240px] ' >
+                                        <img loading='lazy' className='w-[240px] h-[240px] object-cover ' src={doctor.image} alt="" />
                                     </div>
-                                    <p className='text-xl' >{doctor.name}</p>
-                                    <p className='pb-2 text-gray-400 text-sm' >{doctor.speciality}</p>
+                                    <div className='ml-4' >
+                                        <div className='flex items-center text-green-500 gap-3 mt-3' >
+                                            <p className='font-black bg-green-500 h-2 w-2 rounded-full' ></p>
+                                            <p>available</p>
+                                        </div>
+                                        <p className='text-xl' >{doctor.name}</p>
+                                        <p className='pb-2 text-gray-400 text-sm' >{doctor.speciality}</p>
+                                    </div>
                                 </div>
-                            </div>
                             </Link>
                         ))
                     }
