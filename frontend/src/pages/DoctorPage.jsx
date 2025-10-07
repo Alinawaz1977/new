@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { DoctorContext } from "../Context/doctorContext";
 import { assets } from "../assets/assets";
 import ContactUs from "./ContactUs";
@@ -18,7 +18,7 @@ const DoctorPage = () => {
     const [slotTime, setslotTime] = useState('')
     const [relatedDoctors, setrelatedDoctors] = useState([])
     console.log(doctorSlots);
-    
+
 
 
 
@@ -61,7 +61,7 @@ const DoctorPage = () => {
             }
             let timeSlot = []
             while (currentDate < endDate) {
-                let formatedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit",hour12:true   })
+                let formatedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true })
                 const day = currentDate.getDate()
                 const month = currentDate.getMonth() + 1
                 const year = currentDate.getFullYear()
@@ -76,7 +76,7 @@ const DoctorPage = () => {
                 }
                 currentDate.setMinutes(currentDate.getMinutes() + 30)
             }
-            if(timeSlot.length>0){
+            if (timeSlot.length > 0) {
                 setDoctorSlots(prev => ([...prev, timeSlot]))
             }
         }
@@ -116,7 +116,7 @@ const DoctorPage = () => {
         fetchRelatedDoctor()
     }, [doctors, doctorid])
     useEffect(() => {
-        if(doctorinfo){
+        if (doctorinfo) {
             getAvailableSlots()
         }
     }, [doctorinfo])
@@ -193,6 +193,7 @@ const DoctorPage = () => {
 
                     {
                         relatedDoctors.map((doctor, index) => (
+                            <Link to={`/doctors/${doctor._id}`} >
                             <div onClick={() => navigate(`/doctors/${doctor._id}`, scrollTo(0, 0))} className='border mt-10 hover:transform hover:translate-y-[-10px]  transition-all duration-300 h-fit  w-fit cursor-pointer rounded-md border-gray-300' >
                                 <div className=' rounded-md w-[240px] bg-[#eaefff] transition-all duration-500  h-[240px] ' >
                                     <img loading='lazy' className='w-[240px] h-[240px] object-cover ' src={doctor.image} alt="" />
@@ -206,6 +207,7 @@ const DoctorPage = () => {
                                     <p className='pb-2 text-gray-400 text-sm' >{doctor.speciality}</p>
                                 </div>
                             </div>
+                            </Link>
                         ))
                     }
                 </div>

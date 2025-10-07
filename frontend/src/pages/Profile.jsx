@@ -60,7 +60,7 @@ import { useNavigate } from 'react-router-dom'
         if (response.data.success) {
           toast.success(response.data.message)
           setprofileType('save')
-          window.location.reload()
+          fetchUser()
         }
         else {
           toast.error(response.data.message)

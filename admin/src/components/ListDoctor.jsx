@@ -12,8 +12,8 @@ const ListDoctor = () => {
     return (
         <>
             {token &&
-                <div className='overflow-scroll' >
-                    <p className='text-lg font-medium my-4 flex gap-3 ' >All Doctors</p>
+                <div className=' overflow-scroll' >
+                    <p className= 'text-lg font-medium my-4 flex gap-3 ' >All Doctors</p>
                     <div className='flex gap-3 flex-wrap' >
                         {
                             doctors?.map((doctor) => (

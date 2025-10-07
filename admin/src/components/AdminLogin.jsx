@@ -43,7 +43,6 @@ const AdminLogin = () => {
         const response = await axios.post(backendUrl + "/api/doctor/login", { email, password })
         if (response.data.success) {
           setdtoken(response.data.token)
-          console.log(response.data.token);
           navigate("/doctor-dashboard ")
           
         }

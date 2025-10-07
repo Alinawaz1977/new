@@ -23,7 +23,7 @@ const appointmentSchema= new mongoose.Schema({
         type:Number,require:true
     },
     isCompleted:{
-        type:String,default:false
+        type:Boolean,default:false
     },
     cancelled:{
         type:Boolean,default:false

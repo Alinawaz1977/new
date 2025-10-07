@@ -2,6 +2,7 @@ import express from "express"
 const app = express()
 const port = 3000
 import dotenv from 'dotenv'
+dotenv.config()
 import cors from "cors"
 import { connect } from "mongoose"
 import connectDb from "./config/mongodb.js"
@@ -9,7 +10,6 @@ import doctorRouter from "./routes/doctorRoute.js"
 import connectCloudinary from "./config/cloudinary.js"
 import adminRouter from "./routes/adminRouter.js"
 import userRouter from "./routes/userRoute.js"
-dotenv.config()
 
 
 app.use(express.json())

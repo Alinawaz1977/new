@@ -8,12 +8,14 @@ import { DoctorContext } from '../Context/doctorContext'
 
 const BookedAppointment = () => {
     const { token } = useContext(DoctorContext)
+    console.log(token);
+
     const [bookedDoctors, setbookedDoctors] = useState([])
     const fetchBookedDoctors = async () => {
         try {
             const response = await axios.post(backendUrl + "/api/user/list-appointments", {}, { headers: { token } })
             if (response.data.success) {
-                setbookedDoctors(response.data.appointments)
+                setbookedDoctors(response.data.appointments.reverse())
             }
             else {
                 toast.error(response.data.message)
@@ -36,9 +38,22 @@ const BookedAppointment = () => {
         }
     }
 
+    // for online payment
+    const payOnline = async (appointmentid) => {
+        try {
+            const response = await axios.post(backendUrl + '/api/user/payment', { appointmentid: appointmentid }, { headers: { token } })
+            if (response.data.success) {
+                const { session_url } = response.data
+                window.location.replace(session_url)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     useEffect(() => {
         fetchBookedDoctors()
-    }, [bookedDoctors])
+    }, [])
 
     return (
         <>
@@ -61,11 +76,12 @@ const BookedAppointment = () => {
                                 <p className='text-gray-800 mt-2' >Date & Time <span className='text-gray-500' > | {doctors.slotTime}</span></p>
                             </div>
                         </div>
-                        {doctors.cancelled ? <p>Cancelled</p> : <div className='flex flex-col gap-2  ' >
-                            <button className='border cursor-pointer border-gray-300 px-2 transtional duration-200 py-1.5 hover:bg-blue-600 hover:text-white w-50' >pay online</button>
-                            <button onClick={() => cancel(doctors._id, doctors.slotDate, doctors.slotTime)} className='border cursor-pointer transtional duration-200 py-1.5 hover:bg-red-600 hover:text-white border-gray-300  px-2  w-50' >Cancel appointment</button>
-                        </div>}
-
+                        <div className='flex flex-col gap-1.5 items-center' >
+                        {doctors.cancelled ? <p className='text-red-500' >Cancelled</p> :<button onClick={() => cancel(doctors._id, doctors.slotDate, doctors.slotTime)} className='border cursor-pointer transtional duration-200 py-1.5 hover:bg-red-600 hover:text-white border-gray-300  px-2  w-50' >Cancel appointment</button> }
+                        <div className='flex flex-col gap-2  ' >
+                            {doctors.payment ? <p className='text-green-600' >paid</p> :<button onClick={() => payOnline(doctors._id)} className='border cursor-pointer border-gray-300 px-2 transtional duration-200 py-1.5 hover:bg-blue-600 hover:text-white w-50' >pay online</button> }     
+                        </div>
+                        </div>
                     </div>
                 ))
             }

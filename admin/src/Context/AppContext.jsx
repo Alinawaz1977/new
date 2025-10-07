@@ -11,7 +11,6 @@ export const AppContextProvider = (props) => {
     const [doctors, setdoctors] = useState([])
     const [dtoken, setdtoken] = useState('')
     const [token, settoken] = useState('')
-
     const [appointments, setappointments] = useState([])
     const [patients, setpatients] = useState([])
   

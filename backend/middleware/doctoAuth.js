@@ -3,7 +3,7 @@ const docAuth = (req, res, next) => {
     try {
         const { token } = req.headers
         if (!token) {
-            res.send({ success: false, message: "Invalid credentials" })
+           return res.send({ success: false, message: "Invalid credentials" })
         }
         const decodeToken = jwt.verify(token, process.env.SECRET)
         req.body=req.body || {}

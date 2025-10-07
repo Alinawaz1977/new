@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { DoctorContext } from '../Context/doctorContext'
 import { Title } from './Title'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const TopDoctors = () => {
 
@@ -18,7 +18,8 @@ const TopDoctors = () => {
       <div className='flex justify-center gap-4 mt-10 flex-wrap ' >
         {
           doctors.map((doctor) => (
-            <div className='border w-fit cursor-pointer rounded-md border-gray-300 hover:transform hover:translate-y-[-10px] transition-all duration-300 ' >
+            <Link to={`/doctors/${doctor._id}`} >
+            <div  className='border w-fit cursor-pointer rounded-md border-gray-300 hover:transform hover:translate-y-[-10px] transition-all duration-300 ' >
               <div className=' rounded-md w-[210px] bg-[#eaefff] transition-all duration-500  h-[220px] ' >
                 <img loading='lazy' className='w-[210px] h-[220px] object-cover ' src={doctor.image} alt="" />
               </div>
@@ -31,6 +32,7 @@ const TopDoctors = () => {
                 <p className='pb-2 text-gray-600 text-sm' >{doctor.speciality}</p>
               </div>
             </div>
+            </Link>
           ))
         }
       </div>

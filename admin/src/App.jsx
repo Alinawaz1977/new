@@ -15,6 +15,7 @@ import { useContext } from 'react'
 import { AppContext } from './Context/AppContext'
 import DoctorNavbar from './components/doctors/DoctorNavbar'
 import DoctorSidebar from './components/doctors/DoctorSidebar'
+import DoctorAppointments from './components/doctors/DoctorAppointments'
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URI
 
@@ -40,6 +41,7 @@ const App = () => {
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/appointments' element={<Appointments />} />
             <Route path='/doctor-dashboard' element={<DoctorDashboard />} />
+            <Route path='/doctor-appointments' element={<DoctorAppointments />} />
           </Routes>
         </div>
       </> : <AdminLogin />}

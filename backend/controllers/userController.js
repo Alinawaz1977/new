@@ -3,7 +3,17 @@ import bcrypt, { hash } from "bcrypt"
 import createtoken from "../utils/userToken.js"
 import doctormodel from "../models/doctorModel.js"
 import appointmentModel from "../models/appointmentModel.js"
+import env, { configDotenv } from "dotenv"
+configDotenv()
+import Stripe from "stripe"
 import { v2 as cloudinary } from "cloudinary"
+const currency = "$"
+const deliveryCharges = "10"
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+
+
+
 
 const createUser = async (req, res) => {
     try {
@@ -124,7 +134,6 @@ const cancelFeature = async (req, res) => {
             doctor.slots_Booked[slotDate] = doctor.slots_Booked[slotDate].filter(
                 (time) => time !== slotTime
             );
-
             if (doctor.slots_Booked[slotDate].length === 0) {
                 delete doctor.slots_Booked[slotDate];
             }
@@ -132,7 +141,6 @@ const cancelFeature = async (req, res) => {
             // ✅ Mark as modified so Mongoose knows it changed
             doctor.markModified('slots_Booked');
         }
-
         // Mark appointment as cancelled
         appointment.cancelled = true;
 
@@ -153,14 +161,14 @@ const updateProfile = async (req, res) => {
     try {
         const { userid, address1, address2, gender, dob, phone } = req.body
         const user = await userModel.findById(userid)
-        const image =  req.file
-        if(image){
+        const image = req.file
+        if (image) {
             const imageUrl = await cloudinary.uploader.upload(image.path, { resource_type: 'image' })
             user.image = imageUrl.secure_url
         }
         const birthDate = new Date(dob)
         const today = new Date()
-        const age =  today.getFullYear()-birthDate.getFullYear() 
+        const age = today.getFullYear() - birthDate.getFullYear()
         console.log(age);
         user.address1 = address1
         user.address2 = address2
@@ -186,5 +194,63 @@ const findUser = async (req, res) => {
 }
 
 
+// completing online payment through stripe 
+const onlinePayment = async (req, res) => {
+    try {
+        const { appointmentid } = req.body
+        const { origin } = req.headers
+        const appointment = await appointmentModel.findById(appointmentid)
 
-export { createUser, loginUser, bookAppointment, findUser, updateProfile, allPatients, listAppointments, cancelFeature, listAllAppointments }
+
+        const line_items = [{
+            price_data: {
+                currency: "usd",
+                product_data: {
+                    name: appointment.docData?.name
+                },
+                unit_amount: appointment.amount * 100 // Stripe uses cents
+            },
+            quantity: 1
+        }];
+
+        line_items.push({
+            price_data: {
+                currency: 'usd',
+                product_data: {
+                    name: "delievery charges"
+                },
+                unit_amount: deliveryCharges * 100
+            },
+            quantity: 1
+        })
+
+        const session = await stripe.checkout.sessions.create({
+            success_url: `${origin}/verify?success=true&docid=${appointment._id}`,
+            cancel_url: `${origin}/verify?success=false&docid=${appointment._id}`,
+            line_items,
+            mode: "payment",
+        })
+        console.log("session:", session);
+
+        res.send({ success: true, session_url: session.url })
+    } catch (error) {
+        res.send({ success: false, message: error.message })
+    }
+}
+
+const verifyPayment = async (req, res) => {
+    try {
+        const { docid, success } = req.body
+        if (success === "true") {
+            const appointment = await appointmentModel.findById(docid)
+            appointment.payment = true
+            await appointment.save()
+            res.send({ success: true, message: "payment successfully" })
+        }
+        res.send({ success: false, message: "payment failed" })
+    } catch (error) {
+        res.send({ success: false, message: error.message })
+    }
+}
+
+export { createUser, loginUser, verifyPayment, bookAppointment, findUser, updateProfile, allPatients, listAppointments, onlinePayment, cancelFeature, listAllAppointments }

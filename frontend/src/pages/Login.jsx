@@ -3,14 +3,15 @@ import axios from 'axios'
 import { useState } from 'react'
 import { backendUrl } from '../App'
 import { useForm } from "react-hook-form"
-import { data } from 'react-router-dom'
+import { data, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useContext } from 'react'
 import { DoctorContext } from '../Context/doctorContext'
 import { AppContext } from '../../../admin/src/Context/AppContext'
 const Login = () => {
-    const {token,settoken}=useContext(DoctorContext)
-    
+    const navigate = useNavigate()
+    const { token, settoken } = useContext(DoctorContext)
+
     const {
         register,
         handleSubmit,
@@ -29,8 +30,8 @@ const Login = () => {
                 const response = await axios.post(backendUrl + "/api/user/login", data)
                 if (response.data.success) {
                     settoken(response.data.token)
-                    localStorage.setItem("token",response.data.token)
-                    
+                    localStorage.setItem("token", response.data.token)
+                    navigate("/")
                 }
                 else {
                     toast.error(response.data.message)
@@ -41,6 +42,7 @@ const Login = () => {
                 if (response.data.success) {
                     settoken(response.data.token)
                     console.log(response.data.token);
+                    navigate("/")
                 }
                 else {
                     toast.error(response.data.message)
