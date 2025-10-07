@@ -37,7 +37,7 @@ const TopDoctors = () => {
         }
       </div>
       <div className='flex justify-center items-center' >
-      <button onClick={()=>navigate("/doctors")} className='py-2 blue rounded-full mt-15  text-center px-10 bg-[#eaefff] cursor-pointer  ' >more</button>
+      <button onClick={()=>{navigate("/doctors");scrollTo(0,0);}}  className='py-2 blue rounded-full mt-15  text-center px-10 bg-[#eaefff] cursor-pointer  ' >more</button>
       </div>
     </>
   )
