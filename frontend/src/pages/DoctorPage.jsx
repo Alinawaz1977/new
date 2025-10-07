@@ -60,7 +60,7 @@ const DoctorPage = () => {
                 currentDate.setMinutes(0)
             }
             let timeSlot = []
-            while (currentDate < endDate) {
+            while (currentDate <= endDate) {
                 let formatedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true })
                 const day = currentDate.getDate()
                 const month = currentDate.getMonth() + 1
