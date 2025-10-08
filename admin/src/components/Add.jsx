@@ -56,11 +56,10 @@ const Add = () => {
     <>
       {
         token &&
-        <div className="flex flex-col">
+        <div className="flex mx-2 flex-col w-full ">
           <p className="font-medium my-3">Add Doctor</p>
-          <div className="border pt-5 pl-8 pr-8 border-gray-300 w-[60vw] bg-white h-[83vh] overflow-auto">
+          <div className="border pt-5 pl-8 pr-8 border-gray-300 w-full  md:w-[60vw] bg-white h-[83vh] overflow-auto">
             <form className="grid grid-cols-2 gap-6" onSubmit={handleSubmit(onSubmit)}>
-
               {/* Upload Picture (full width) */}
               <div className="col-span-2">
                 <label className="flex gap-3.5 items-center cursor-pointer" htmlFor="upload">
@@ -69,7 +68,6 @@ const Add = () => {
                   <input onChange={(e) => setimage(e.target.files[0])} type="file" id="upload" hidden />
                 </label>
               </div>
-
               {/* Left Column */}
               <div>
                 <p className="my-2">Doctor Name</p>

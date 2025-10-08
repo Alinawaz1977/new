@@ -15,6 +15,7 @@ import { AppContext } from './Context/AppContext'
 import DoctorNavbar from './components/doctors/DoctorNavbar'
 import DoctorSidebar from './components/doctors/DoctorSidebar'
 import DoctorAppointments from './components/doctors/DoctorAppointments'
+import MobileSidebar from './components/MobileSidebar'
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URI
 
@@ -33,6 +34,7 @@ const App = () => {
         <DoctorNavbar />
         <div className='flex pt-16 bg-slate-100 gap-6 border-b h-screen overflow-hidden border-gray-400 ' >
           <Sidebar />
+          <MobileSidebar/>
           <DoctorSidebar/>
           <Routes>
             <Route path='/add' element={<Add />} />

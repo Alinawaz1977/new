@@ -94,25 +94,27 @@ const cancellAppointment = async (req, res) => {
     try {
         const { appointmentid } = req.body
         const appointment = await appointmentModel.findOne({ _id: appointmentid })
-        appointment.cancelled=true;
-        appointment.isCompleted=false
+        appointment.cancelled = true;
+        appointment.isCompleted = false
         await appointment.save()
-        res.send({success:true,message:"appointment cancelled"})
+        res.send({ success: true, message: "appointment cancelled" })
     } catch (error) {
-        res.send({success:true,message:error.message})
+        res.send({ success: true, message: error.message })
     }
 }
 const complteAppointment = async (req, res) => {
     try {
         const { appointmentid } = req.body
         const appointment = await appointmentModel.findOne({ _id: appointmentid })
-        appointment.cancelled=false;
-        appointment.isCompleted=true
+        appointment.cancelled = false;
+        appointment.isCompleted = true
         await appointment.save()
-        res.send({success:true,message:"appointment completed"})
+        res.send({ success: true, message: "appointment completed" })
     } catch (error) {
-        res.send({success:true,message:error.message})
+        res.send({ success: true, message: error.message })
     }
 }
 
-export { addDoctor, listDoctor, doctorLogin, findPatients,cancellAppointment,complteAppointment }
+
+
+export { addDoctor, listDoctor, doctorLogin, findPatients, cancellAppointment, complteAppointment }

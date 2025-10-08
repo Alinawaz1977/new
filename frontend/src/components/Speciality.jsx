@@ -14,8 +14,8 @@ const Speciality = () => {
                 </div>
                 <div className='grid grid-cols-[140px_140px] sm:grid-cols-[100px_110px_100px_100px_110px_100px] gap-2.5 md:flex-row text-center justify-center  mt-15  ' >
                     {
-                        specialityData.map((item) => (
-                            <NavLink to={`/doctors/${item.speciality}`} className='flex flex-col items-center ' >
+                        specialityData.map((item,index) => (
+                            <NavLink key={index} to={`/doctors/category/${item.speciality}`} className='flex flex-col items-center ' >
                                 <img className='w-25 hover:-translate-y-2 duration-400 cursor-pointer transition-all ' src={item.image} alt="" />
                                 <p className=' mt-3 text-sm text-gray-600' >{item.speciality}</p>
                             </NavLink>
