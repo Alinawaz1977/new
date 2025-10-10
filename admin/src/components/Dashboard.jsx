@@ -1,18 +1,44 @@
 import React, { useContext } from 'react'
 import { assets } from '../assets/assets'
 import { AppContext } from '../Context/AppContext'
+import axios from 'axios'
+import { backendUrl } from '../App'
+import { toast } from 'react-toastify'
 
 const Dashboard = () => {
-    const { doctors, token, appointments, patients } = useContext(AppContext)
+    const { doctors, token, appointments,fetchAppointments, patients } = useContext(AppContext)
     console.log(token);
-    
+
+    const cancelAppointment = async (id) => {
+        try {
+            const response = await axios.post(backendUrl + '/api/admin/cancel', { appointmentid: id }, { headers: { token } })
+            if (response.data.success) {
+                toast.success("appointment cancelled")
+                fetchAppointments()
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+    const completeAppointment = async (id) => {
+        try {
+            const response = await axios.post(backendUrl + '/api/admin/complete', { appointmentid: id }, { headers: { token } })
+            if (response.data.success) {
+                toast.success("appointment cancelled")
+                fetchAppointments()
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
 
     return token && (
         <>
-            <div className='mx-3 w-full flex flex-col ' >
+            <div className='mr-6 w-full flex flex-col ' >
                 <div className='flex flex-col justify-center md:justify-normal md:flex-row gap-2 mt-5'>
                     <div className='border border-gray-200 flex items-center bg-white w-[200px]  ' >
-                        <img className='w-20' src={assets.doctor_icon} alt="doctoricon" />
+                        <img loading='lazy ' className='w-20' src={assets.doctor_icon} alt="doctoricon" />
                         <div>
                             <p className='font-medium' >{doctors.length}</p>
                             <p className='text-gray-700' >doctors</p>
@@ -48,7 +74,13 @@ const Dashboard = () => {
                                         <p className='text-sm text-gray-400' >Booking on {appointment.slotDate}</p>
                                     </div>
                                 </div>
-                                <img src={assets.cancel_icon} alt="" />
+                                <div className='flex items-center gap-1' >
+                                    {appointment.cancelled === true && appointment.isCompleted === false && <p className='text-red-500' >Completed</p>}
+                                    {appointment.cancelled === false && appointment.isCompleted === true && <p className='text-green-500' >Completed</p>}
+                                    {appointment.isCompleted === false && appointment.cancelled === false && <div className='flex ' >
+                                        <img onClick={()=>cancelAppointment(appointment._id)} className='w-12 h-12' src={assets.cancel_icon} alt="cancleicon" /><img onClick={()=>completeAppointment(appointment._id)} className='w-12 h-12' src={assets.completeicon} alt="" />
+                                    </div>}
+                                </div>
                             </div>
                         ))
                     }

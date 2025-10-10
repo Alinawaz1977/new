@@ -11,6 +11,8 @@ import { toast } from 'react-toastify'
 const DoctorDashboard = () => {
   const { doctors, appointments, patients, dtoken } = useContext(AppContext)
   const [patientsDetails, setpatientsDetails] = useState([])
+  console.log(dtoken);
+  
 
   const [stats, setstats] = useState([])
   console.log(stats);

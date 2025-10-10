@@ -1,5 +1,5 @@
 import { assets } from '../../assets/assets'
-import { Link,NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import React from 'react'
 import { AppContext } from '../../Context/AppContext'
 import { useContext } from 'react'
@@ -22,7 +22,7 @@ const DoctorSidebar = () => {
                 </div>
                 <div className='h-7 w-[4px] bg-blue-700 hidden line ' ></div>
             </NavLink>
-            <NavLink className={'flex h-10 justify-between py-1.5 mt-4 pl-5 w-full '} to={"/doctor/profile"} >
+            <NavLink className={'flex h-10 justify-between py-1.5 mt-4 pl-5 w-full '} to={"/doctor-profile"} >
                 <div className='flex gap-3 items-center ' >
                     <img className='w-5' src={assets.add_icon} alt="home" />
                     <p className='   ' >Profile</p>
@@ -31,7 +31,6 @@ const DoctorSidebar = () => {
             </NavLink>
         </div>
     )
-
 }
 
 export default DoctorSidebar

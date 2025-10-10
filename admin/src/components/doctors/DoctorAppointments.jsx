@@ -52,7 +52,7 @@ const DoctorAppointments = () => {
         patientsDets()
     }, [appointments, patients])
     return patientsDetails && (
-        <div className='mt-5 mx-2' >
+        <div className='mt-5 mx-auto' >
             <p className='font-medium my-2 ' >All Appointments</p>
             <div className='border border-gray-300 h-[80vh]  overflow-scroll bg-white pl-4 ' >
                 <div className='w-full bg-white font-medium text-sm sm:text-lg grid grid-cols-[1fr_2fr_2fr_1fr_2fr_3fr] my-2 md:w-[70vw]'  >
@@ -67,10 +67,10 @@ const DoctorAppointments = () => {
                     patientsDetails?.map((patients, index) => (
                         <div key={index} className=' text-sm sm:text-base items-center justify-center grid grid-cols-[1fr_2fr_2fr_1fr_2fr_3fr] py-2 border-t border-gray-300 bg-white w-full sm:w-[70vw]' >
                             <p className='font-medium text-lg' >{index + 1}</p>
-                            <p className='flex gap-2 items-center text-sm ' ><img className='hidden sm:block w-10 h-10 object-cover rounded-full' loading='lazy' src={patients.userData.image} alt="" /> {patients.userData.name}</p>
+                            <p className='flex gap-2 items-center text-sm ' ><img className='hidden sm:block w-10 h-10 object-cover rounded-full' loading='lazy' src={patients?.userData?.image} alt="" /> {patients?.userData?.name}</p>
                             <p>{patients.payment ? "online" : "cash"}</p>
-                            <p className='' >{patients.userData.dob}</p>
-                            <p >${patients.amount}</p>
+                            <p className='' >{patients?.userData?.dob}</p>
+                            <p >${patients?.amount}</p>
                             <div className='flex text-sm items-center gap-1.5' >
                                 <p className='text-sm sm:text-base' >{patients.isCompleted && patients.cancelled === false && <p className='inline p-2 rounded-sm bg-green-200' >completed</p>}</p>
                                 <p className='text-sm sm:text-base' >{patients.isCompleted === false && patients.cancelled === true && <p className='inline p-2 rounded-sm bg-red-200' >cancelled</p>}</p>

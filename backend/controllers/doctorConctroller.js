@@ -114,7 +114,54 @@ const complteAppointment = async (req, res) => {
         res.send({ success: true, message: error.message })
     }
 }
+// for doctor profile 
+const doctorProfile = async (req, res) => {
+    try {
+        const { docid } = req.body
+        const doctor = await doctormodel.findById(docid)
+        if(!doctor){
+            return res.send({success:false,message:"Invalid Doctor"})
+        }
+        res.send({ success: true, doctor })
+    } catch (error) {
+        res.send({ success: false, message: error.message })
+    }
+}
 
+// update doctor profile
+const updateDoctorProfile = async (req, res) => {
+    try {
+        const { docid } = req.body
+        const {
+            name,
+            degree,
+            speciality,
+            experience,
+            description,
+            fee,
+            address1,
+            address2,
+        } = req.body
 
+        const doctor = await doctormodel.findById(docid)
+        if (!doctor) {
+            return res.send({ success: false, message: "Invalid Doctor" })
+        }
 
-export { addDoctor, listDoctor, doctorLogin, findPatients, cancellAppointment, complteAppointment }
+        if (typeof name === "string") doctor.name = name
+        if (typeof degree === "string") doctor.degree = degree
+        if (typeof speciality === "string") doctor.speciality = speciality
+        if (typeof experience === "string") doctor.experience = experience
+        if (typeof description === "string") doctor.description = description
+        if (fee !== undefined && fee !== null && fee !== "") doctor.fee = Number(fee)
+        if (typeof address1 === "string") doctor.address1 = address1
+        if (typeof address2 === "string") doctor.address2 = address2
+
+        await doctor.save()
+        res.send({ success: true, message: "Profile updated", doctor })
+    } catch (error) {
+        res.send({ success: false, message: error.message })
+    }
+}
+
+export { addDoctor, doctorProfile, listDoctor, doctorLogin, findPatients, cancellAppointment, complteAppointment, updateDoctorProfile }

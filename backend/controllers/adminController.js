@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import doctormodel from "../models/doctorModel.js"
+import appointmentmodel from "../models/appointmentModel.js"
 
 const adminUser = (req, res) => {
     try {
@@ -32,4 +33,31 @@ const availableDoctor = async (req, res) => {
     }
 }
 
-export { adminUser, availableDoctor }
+// cancel appointment from admin
+
+const cancelAppointment = async (req, res) => {
+    try {
+        const { appointmentid } = req.body
+        const appointment = await appointmentmodel.findById(appointmentid)
+        appointment.cancelled = true;
+        appointment.isCompleted= false;
+        await appointment.save()
+        res.send({ success: true, message: "appointment cancelled" })
+    } catch (error) {
+        res.send({ success: false, message: error.message })
+    }
+}
+const completeAppointment = async (req, res) => {
+    try {
+        const { appointmentid } = req.body
+        const appointment = await appointmentmodel.findById(appointmentid)
+        appointment.isCompleted= true;
+        appointment.cancelled= false;
+        await appointment.save()
+        res.send({ success: true, message: "appointment completed" })
+    } catch (error) {
+        res.send({ success: false, message: error.message })
+    }
+}
+
+export { adminUser, availableDoctor, cancelAppointment ,completeAppointment}

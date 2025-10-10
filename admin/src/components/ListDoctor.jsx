@@ -32,7 +32,7 @@ const ListDoctor = () => {
                             doctors?.map((doctor) => (
                                 <div className='border-2 cursor-pointer rounded-xl border-gray-300' >
                                     <div className='h-[210px] hover:bg-blue-700 transition-all duration-500 rounded-xl bg-slate-200 w-[220px]  ' >
-                                        <img className='h-[210px] w-[220px] object-cover' src={doctor.image} alt="doctor image" />
+                                        <img loading='lazy' className='h-[210px] w-[220px] object-cover' src={doctor.image} alt="doctor image" />
                                     </div>
                                     <div className='ml-3 mt-4' >
                                         <p className='text-xl mt-2.5' >{doctor.name}</p>

@@ -10,10 +10,11 @@ export const AppContext = createContext()
 export const AppContextProvider = (props) => {
     const [doctors, setdoctors] = useState([])
     const [dtoken, setdtoken] = useState('')
+    
     const [token, settoken] = useState('')
     const [appointments, setappointments] = useState([])
     const [patients, setpatients] = useState([])
-  
+
 
     const fetchDoctors = async () => {
         try {
@@ -33,7 +34,7 @@ export const AppContextProvider = (props) => {
         try {
             const response = await axios.post(backendUrl + "/api/user/listall-appointments")
             if (response.data.success) {
-                setappointments(response.data.appointments)
+                setappointments(response.data.appointments.reverse())
             }
             else {
                 toast.error(response.data.error)
@@ -60,12 +61,12 @@ export const AppContextProvider = (props) => {
 
     useEffect(() => {
         fetchDoctors()
-        fetchAppointments()
         fetchPatients()
     }, [])
+    fetchAppointments()
 
     const value = {
-        doctors, appointments, patients, dtoken, setdtoken, token, settoken
+        doctors, appointments, patients, dtoken, setdtoken, fetchAppointments, token, settoken
     }
     return (
         <AppContext.Provider value={value} >

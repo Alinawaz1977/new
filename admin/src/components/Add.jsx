@@ -56,7 +56,7 @@ const Add = () => {
     <>
       {
         token &&
-        <div className="flex mx-2 flex-col w-full ">
+        <div className="flex mr-6 justify-center flex-col w-full ">
           <p className="font-medium my-3">Add Doctor</p>
           <div className="border pt-5 pl-8 pr-8 border-gray-300 w-full  md:w-[60vw] bg-white h-[83vh] overflow-auto">
             <form className="grid grid-cols-2 gap-6" onSubmit={handleSubmit(onSubmit)}>

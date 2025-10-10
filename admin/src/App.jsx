@@ -16,6 +16,8 @@ import DoctorNavbar from './components/doctors/DoctorNavbar'
 import DoctorSidebar from './components/doctors/DoctorSidebar'
 import DoctorAppointments from './components/doctors/DoctorAppointments'
 import MobileSidebar from './components/MobileSidebar'
+import { DoctorMobileSidebar } from './components/doctors/DoctorMobileSidebar'
+import DoctorProfile from './components/doctors/DoctorProfile'
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URI
 
@@ -24,18 +26,19 @@ const App = () => {
 
 
   return (
-    <>
+    <div className='relative' >
       <ToastContainer />
       {/* {
         token === '' && <AdminLogin setToken={setToken} />
       } */}
       {token || dtoken ? <>
         <Navbar />
-        <DoctorNavbar />
+        <DoctorNavbar  />
+        <DoctorMobileSidebar />
         <div className='flex pt-16 bg-slate-100 gap-6 border-b h-screen overflow-hidden border-gray-400 ' >
           <Sidebar />
           <MobileSidebar/>
-          <DoctorSidebar/>
+          <DoctorSidebar />
           <Routes>
             <Route path='/add' element={<Add />} />
             <Route path='/listdoctor' element={<ListDoctor />} />
@@ -43,13 +46,14 @@ const App = () => {
             <Route path='/appointments' element={<Appointments />} />
             <Route path='/doctor-dashboard' element={<DoctorDashboard />} />
             <Route path='/doctor-appointments' element={<DoctorAppointments />} />
+            <Route path='/doctor-profile' element={<DoctorProfile/>} />
           </Routes>
         </div>
       </> : <AdminLogin />}
       <Routes>
         <Route path='/login' element={<AdminLogin />} />
       </Routes>
-    </>
+    </div>
   )
 }
 
