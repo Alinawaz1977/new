@@ -52,7 +52,6 @@ const Profile = () => {
   }
 
   const onSubmit = async (data) => {
-    console.log(data);
     const formData = new FormData()
     formData.append("image", image) // selectedFile must be a File object from input
     formData.append("address1", data.address1)
