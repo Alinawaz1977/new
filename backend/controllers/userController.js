@@ -61,7 +61,7 @@ const bookAppointment = async (req, res) => {
         const { userid, doctorid, slotDate, slotTime } = req.body
         const docData = await doctormodel.findById(doctorid).select("-password")
         if (!docData.available) {
-           return res.send({ success: false, message: "doctor not available" })
+            return res.send({ success: false, message: "doctor not available" })
         }
         const slots_Booked = docData.slots_Booked
         if (slots_Booked[slotDate]) {
@@ -169,7 +169,6 @@ const updateProfile = async (req, res) => {
         const birthDate = new Date(dob)
         const today = new Date()
         const age = today.getFullYear() - birthDate.getFullYear()
-        console.log(age);
         user.address1 = address1
         user.address2 = address2
         user.gender = gender
