@@ -33,11 +33,11 @@ const App = () => {
       } */}
       {token || dtoken ? <>
         <Navbar />
-        <DoctorNavbar  />
+        <DoctorNavbar />
         <DoctorMobileSidebar />
         <div className='flex pt-16 bg-slate-100 gap-6 border-b h-screen overflow-hidden border-gray-400 ' >
           <Sidebar />
-          <MobileSidebar/>
+          <MobileSidebar />
           <DoctorSidebar />
           <Routes>
             <Route path='/add' element={<Add />} />
@@ -46,7 +46,7 @@ const App = () => {
             <Route path='/appointments' element={<Appointments />} />
             <Route path='/doctor-dashboard' element={<DoctorDashboard />} />
             <Route path='/doctor-appointments' element={<DoctorAppointments />} />
-            <Route path='/doctor-profile' element={<DoctorProfile/>} />
+            <Route path='/doctor-profile' element={<DoctorProfile />} />
           </Routes>
         </div>
       </> : <AdminLogin />}

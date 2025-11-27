@@ -49,7 +49,6 @@ const Add = () => {
     } catch (error) {
       toast.error(error.message)
     }
-
   }
 
   return (
