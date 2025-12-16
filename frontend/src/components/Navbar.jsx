@@ -70,7 +70,7 @@ const Navbar = () => {
           <NavLink to={"/doctors"} className='hidden md:block text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200' >ALL DOCTORS</NavLink>
           <NavLink to={"/contact"} className='hidden md:block text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200' >CONTACT</NavLink>
           <NavLink to={"/about"} className='hidden md:block text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200' >ABOUT</NavLink>
-          <a target="_blank"
+          <a target="https://doctor-admin-alpha.vercel.app"
             rel="noopener noreferrer" 
             className='hidden md:flex items-center gap-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 hover:scale-105 border border-gray-200 hover:border-blue-300 px-3 py-2 rounded-lg hover:shadow-md' 
             href="https://doctor-admin-silk.vercel.app"
